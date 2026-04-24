@@ -2,12 +2,18 @@
 
 ## Description
 
-Spring Boot based backend for expense tracking with authentication support.
+Spring Boot based backend for expense tracking with secure authentication using JWT.
+
+---
 
 ## Features
 
 - User Registration API
-- Spring Security Configuration (Basic Setup)
+- Login API with JWT Authentication 🔐
+- Password Encryption using BCrypt
+- Spring Security Configuration
+
+---
 
 ## Tech Stack
 
@@ -15,14 +21,17 @@ Spring Boot based backend for expense tracking with authentication support.
 - Spring Boot
 - MySQL
 - Spring Security
+- JWT (JSON Web Token)
+
+---
 
 ## API Endpoints
 
 ### Register User
 
-POST /api/auth/register
+**POST** `/api/auth/register`
 
-### Request Body
+#### Request Body
 
 ```json
 {
@@ -32,15 +41,48 @@ POST /api/auth/register
 }
 ```
 
+---
+
+### Login User
+
+**POST** `/api/auth/login`
+
+#### Request Body
+
+```json
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+```
+
+#### Response
+
+```
+JWT Token (String)
+```
+
+---
+
 ## How to Run
 
 1. Clone the repository
 2. Configure MySQL in `application.properties`
-3. Run the Spring Boot application
-4. Test API using Postman
+3. Run the Spring Boot application:
+
+```bash
+mvn spring-boot:run
+```
+
+4. Test APIs using Postman
+
+---
 
 ## Future Improvements
 
-- Login API
-- JWT Authentication
+- JWT Filter for protected routes 🔐
+- Role-based authentication (Admin/User)
 - Expense CRUD APIs
+- Docker deployment
+
+---

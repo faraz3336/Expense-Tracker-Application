@@ -52,3 +52,4 @@ node_modules/
 #frontend node modules
 frontend/node_modules/
 
+src/main/resources/application.properties
