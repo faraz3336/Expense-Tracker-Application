@@ -6,11 +6,17 @@ import org.springframework.stereotype.Service;
 
 import com.faraz.expenseTracker.models.User;
 import com.faraz.expenseTracker.repository.UserRepository;
+import com.faraz.expenseTracker.security.JwtUtils;
 
 @Service
 public class AuthService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final JwtUtils jwtUtils;
+
+    public AuthService(UserRepository userRepository, JwtUtils jwtUtils) {
+        this.userRepository = userRepository;
+        this.jwtUtils = jwtUtils;
+    }
 
     public String register(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
@@ -29,7 +35,7 @@ public class AuthService {
         if (!encoder.matches(password, user.getPassword())) {
             return "Invalid password!";
         }
-        return "Login successful!";
+        return jwtUtils.generateToken(email);
     }
 
 }
