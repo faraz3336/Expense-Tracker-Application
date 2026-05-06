@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.faraz.expenseTracker.dto.LoginRequest;
 import com.faraz.expenseTracker.models.User;
 import com.faraz.expenseTracker.service.AuthService;
 
@@ -21,7 +22,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return authService.login(user.getEmail(), user.getPassword());
+    public String login(@RequestBody LoginRequest request) {
+        System.out.println("🔥 LOGIN API HIT");
+        System.out.println("EMAIL: " + request.getIdentifier());
+        System.out.println("PASSWORD: " + request.getPassword());
+
+        return authService.login(request.getIdentifier(), request.getPassword());
     }
 }

@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, unique = true, length = 100)
     @NotBlank
     private String username;
     @Email
@@ -29,4 +29,7 @@ public class User {
     @Column(nullable = false)
     @NotBlank
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
 }

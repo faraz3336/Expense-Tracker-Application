@@ -1,8 +1,11 @@
 package com.faraz.expenseTracker.security;
+
 import java.security.Key;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
+
+import com.faraz.expenseTracker.models.Role;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,8 +20,8 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String generateToken(String email) {
-        return Jwts.builder().setSubject(email).setIssuedAt(new Date())
+    public String generateToken(String email, String role) {
+        return Jwts.builder().setSubject(email).claim("role", role).setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
@@ -42,5 +45,14 @@ public class JwtUtils {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public String getRoleFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role", String.class);
     }
 }
